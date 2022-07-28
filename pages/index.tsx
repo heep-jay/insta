@@ -11,12 +11,13 @@ const Home: NextPage = () => {
         <title>Insta App</title>
         <link rel="icon" href="https://img.icons8.com/color/48/000000/instagram-new--v1.png" />
       </Head>
+      <Modal/>
       {/* Header */}
       <Header/>
       {/* Feed */}
       <Feed/>
       {/* Modal */}
-      <Modal/>
+      
     </div>
   )
 }
