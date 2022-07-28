@@ -39,11 +39,11 @@ const Post = ({id, caption, username, userImg, img,  }) => {
         
       </div>
       {/* Likes counter */}
-      <p className='p-2 text-sm font-semibold'>570 likes</p>
+      <p className='p-2 text-xs font-semibold'>570 likes</p>
       {/* Caption */}
-      <p className='p-2 text-sm'>
+      <p className='p-2 text-xs'>
         <span className='font-semibold'>{username} </span>
-        {showmore ? caption : `${caption.substring(0, 35)}... `}{' '}
+        {showmore ? caption : `${caption?.substring(0, 35)}... `}{' '}
         <button
           className='text-gray-400' 
           type='button'
@@ -53,7 +53,7 @@ const Post = ({id, caption, username, userImg, img,  }) => {
       </p>
       {/* Comments */}
       {/* InputBox */}
-      <form className='flex items-center p-3 text-sm'>
+      <form className='flex items-center p-3 text-xs'>
         <EmojiHappyIcon className='btn mr-3'/>
         <input 
           	type="text" 

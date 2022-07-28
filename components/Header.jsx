@@ -67,7 +67,7 @@ const Header = () => {
                     <RiMessengerLine className='navBtn'/>
                     <div className='text-xs bg-red-500 text-white absolute w-5 h-5 text-center -top-1 -right-2 rounded-full animate-pulse'>3</div>
                 </div>
-                <CgAddR onClick={()=> setOpen(!open)} className='navBtn'/>
+                <CgAddR onClick={()=> setOpen(true)} className='navBtn'/>
                 <ImCompass2 className='navBtn rotate-180'/>
                 <HeartIcon className='navBtn'/>
                 <img 
