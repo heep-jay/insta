@@ -1,6 +1,8 @@
-import React from 'react'
-import Posts from './Posts'
-import Stories from './Stories'
+import React from 'react';
+import Miniprofile from './Miniprofile';
+import Posts from './Posts';
+import Stories from './Stories';
+import Suggestions from './Suggestions'
 
 const Feed = () => {
   return (
@@ -14,10 +16,14 @@ const Feed = () => {
         <Posts/>
       </section>
       {/* Section 2 */}
-      <section className="hidden lg:inline-grid xl:col-span-1 bg-black h-screen -ml-16 mt-5">
+      <section className="hidden lg:inline-grid xl:col-span-1  -ml-16 mt-6 p-5">
+        <div className='fixed top-30 '>
+            {/* Mini Profile */}
+          <Miniprofile/>
+          {/* Suggestion */}
+          <Suggestions/>
+        </div>
         
-        {/* Mini Profile */}
-        {/* Suggestion */}
       </section>
       
     </main>

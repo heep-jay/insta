@@ -7,9 +7,12 @@ import { RiMessengerLine } from 'react-icons/ri';
 import { CgAddR } from 'react-icons/cg';
 import { ImCompass2 } from 'react-icons/im';
 import { BsPersonCircle } from 'react-icons/bs';
+import { useSession } from 'next-auth/react';
 
 
 const Header = () => {
+    const {data: session } = useSession();
+    console.log(session)
   return (
     
     <div className=' border-b border-gray-300 shadow-sm bg-white  sticky-top-0 z-50 pb-3 lg:pb-0'>
@@ -17,7 +20,7 @@ const Header = () => {
              {/* Left */}
             <div className='relative hidden lg:inline-grid h-20 w-24 cursor-pointer mr-40 '>
                 <Image
-                    src="https://blackhillsballoons.com/wp-content/uploads/2021/01/Instagram-Logo.png"
+                    src={session?.user?.image}
                     layout='fill'
                     objectFit='contain'
                 />
