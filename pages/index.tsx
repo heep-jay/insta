@@ -1,15 +1,22 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import Image from 'next/image';
+
+import { Header, Feed, Modal } from '../components'
 
 const Home: NextPage = () => {
   return (
-    <div className="">
+    <div className=" bg-gray-50 h-screen overflow-y-scroll scrollbar-hide">
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Insta App</title>
+        <link rel="icon" href="https://img.icons8.com/color/48/000000/instagram-new--v1.png" />
       </Head>
-      <div>Instagram build</div>
+      {/* Header */}
+      <Header/>
+      {/* Feed */}
+      <Feed/>
+      {/* Modal */}
+      <Modal/>
     </div>
   )
 }
