@@ -1,12 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { FaRegComment } from 'react-icons/fa';
 import {  HeartIcon, EmojiHappyIcon, PaperAirplaneIcon } from '@heroicons/react/outline';
 import { BsBookmark } from 'react-icons/bs';
+import { useSession } from 'next-auth/react';
+import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const Post = ({id, caption, username, userImg, img,  }) => {
-  const [showmore, setShowmore] = useState(false)
+  const [showmore, setShowmore] = useState(false);
+  const {data: session} = useSession();
+  const [comment, setComment] = useState('');
+  const [comments, setComments] = useState([]);
 
+  useEffect(
+    () => onSnapshot (
+            query(collection(db, 'posts', id, 'comments'), orderBy('timestamp', 'desc')),
+              (snapshot) => {
+                setComments(snapshot.docs)
+                
+              }),     
+    [db]);
+
+  const sendComment = async (e) => {
+    e.preventDefault();
+    const commentTosend = comment;
+    
+    setComment('');
+
+    await addDoc(collection(db, 'posts', id , 'comments'), {
+      comment: commentTosend,
+      username: session.user.username,
+      userImg: session.user.image,
+      timestamp: serverTimestamp(),
+    })
+
+  }
+  console.log(comments)
   return (
     <div className='my-4 bg-white border max-w-lg border-gray-200 shadow-sm rounded-lg'>
       {/* Header*/}
@@ -26,7 +56,8 @@ const Post = ({id, caption, username, userImg, img,  }) => {
         className='w-full object-contain'
       />
       {/* Buttons */}
-      <div className='bg-white flex items-center  p-2'>
+      {session && (
+        <div className='bg-white flex items-center border-t p-2'>
         <div className='flex space-x-4 items-center flex-1'>
           <HeartIcon className='btn'/>
           <FaRegComment className='btn w-6 h-6'/>
@@ -38,11 +69,14 @@ const Post = ({id, caption, username, userImg, img,  }) => {
         </div>
         
       </div>
+      )}
+      
+      
       {/* Likes counter */}
       <p className='p-2 text-xs font-semibold'>570 likes</p>
       {/* Caption */}
       <p className='p-2 text-xs'>
-        <span className='font-semibold'>{username} </span>
+        <span className='font-bold text-gray-600'>{username} </span>
         {showmore ? caption : `${caption?.substring(0, 35)}... `}{' '}
         <button
           className='text-gray-400' 
@@ -52,16 +86,41 @@ const Post = ({id, caption, username, userImg, img,  }) => {
           >{showmore ? "less" : "more"}</button>
       </p>
       {/* Comments */}
+      {comments.length > 0 && (
+      <>
+      
+        <h1 className='text-xs ml-2 font-medium text-gray-400'>View all {comments.length} {" "} comments</h1>
+        <div className="p-2 h-12 overflow-y-scroll scrollbar-thumb-black scrollbar-thin">
+          {comments.map((comment)=> (
+            <div key={comment?.id} className='flex items-center space-x-2 mb-3'>
+                {/* <img 
+                  src={comment?.data()?.userImg}
+                  className='h-7 rounded-full'
+                /> */}
+                <p className='text-xs flex-1'>{" "}<span className='font-bold text-gray-600'>{comment.data().username} </span>{comment.data().comment}</p>
+            </div>
+          ))}
+        </div>
+        </>
+      )}
       {/* InputBox */}
-      <form className='flex items-center p-3 text-xs'>
+      {session && (
+        <form 
+          className='flex items-center p-3 text-xs border-t'
+          
+        >
         <EmojiHappyIcon className='btn mr-3'/>
         <input 
-          	type="text" 
+          	type="text"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
             placeholder='Add a Comment'
             className='border-none outline-none flex-1'
           />
-        <button className='text-blue-300 font-semibold'>Post</button>
+        <button onClick={sendComment} type='sumbmit' disabled={!comment.trim()} className='text-blue-300 font-semibold'>Post</button>
       </form>
+      )}
+      
     </div>
   )
 }

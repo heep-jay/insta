@@ -4,7 +4,7 @@
 
 @layer components {
     .navBtn {
-        @apply cursor-pointer h-7 w-7 hover:scale-125 transition-all duration-150 ease-out
+        @apply cursor-pointer h-6 w-6 hover:scale-125 transition-all duration-150 ease-out
     }
     .story {
         @apply w-14 h-14 p-[1.5px] rounded-full border-red-500 border-2 hover:scale-110 transition transform duration-200 ease-out
