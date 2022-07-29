@@ -35,7 +35,7 @@ const Suggestions = () => {
                         />
                         <div className='text-sm w-full flex-1 cursor-pointer'>
                             <p className='font-semibold truncate'>{user.username.substring(0,10)}</p>
-                            <p className='text-gray-400 text-[12px] '>Followed by stephen.nso + 1 more</p>
+                            <p className='text-gray-500 text-[12px] '>Followed by stephen.nso + 1 more</p>
                         </div>
                         <button className='text-blue-400 text-[12px] ml-12 font-medium '>Follow</button>
                     </div>

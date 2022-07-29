@@ -21,8 +21,8 @@ const Header = () => {
     console.log(session)
   return (
     
-    <div className=' border-b border-gray-300 shadow-sm bg-white  sticky-top-0 z-50 p-3 lg:p-0'>
-        <div className="flex justify-between  lg:mt-0 bg-white max-w-4xl items-center mx-5 lg:mx-auto ">
+    <div className=' border-b border-gray-300 shadow-sm bg-white  sticky top-0 z-50 p-3 lg:p-0'>
+        <div className="flex justify-between  lg:mt-0 bg-white max-w-4xl items-center mx-5 lg:mx-auto lg:min-w-[950px] ">
              {/* Left */}
             <div className='relative hidden lg:inline-grid h-16 w-24 cursor-pointer mr-40 '>
                 <Image

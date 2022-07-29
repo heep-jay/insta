@@ -109,7 +109,7 @@ const Post = ({id, caption, username, userImg, img,  }) => {
   }
   
   return (
-    <div className='my-4 bg-white border max-w-lg border-gray-200 shadow-sm rounded-lg'>
+    <div className='my-4 bg-white border border-gray-200 shadow-sm rounded-lg max-w-[482px]'>
       {/* Header*/}
       <div className="flex items-center p-2 py-3 border-b border-gray-200">
         <img 
@@ -124,7 +124,7 @@ const Post = ({id, caption, username, userImg, img,  }) => {
       <img 
         src={img} 
         alt="post-photo"
-        className='w-full bg-black object-contain max-h-[600px]'
+        className='w-full bg-black object-contain max-h-[560px]'
       />
       {/* Buttons */}
       {session && (
