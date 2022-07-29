@@ -10,7 +10,7 @@ const Miniprofile = () => {
             alt="" 
             className='story object-contain border-gray-400 mr-3'
         />
-        <div className='text-xs mr-24'>
+        <div className='text-sm mr-24'>
             <p className='font-semibold'>{session?.user?.username}</p>
             <p className='text-gray-400'>👑👑Djubreal 🔥🔥</p>
         </div>
