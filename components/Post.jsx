@@ -4,7 +4,7 @@ import { FaRegComment } from 'react-icons/fa';
 import { IoPaperPlaneOutline } from "react-icons/io5";
 import {  HeartIcon, EmojiHappyIcon, PaperAirplaneIcon } from '@heroicons/react/outline';
 import {  HeartIcon as  HeartIconFilled } from '@heroicons/react/solid';
-import { BsBookmark } from 'react-icons/bs';
+import { BsBookmark, BsBookmarkFill } from 'react-icons/bs';
 import { useSession } from 'next-auth/react';
 import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, orderBy, query, serverTimestamp, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
@@ -16,7 +16,9 @@ const Post = ({id, caption, username, userImg, img,  }) => {
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
   const [likes, setLikes] = useState([]);
-  const [hasLiked, setHasLiked] = useState(false)
+  const [saves, setSaves] = useState([]);
+  const [hasLiked, setHasLiked] = useState(false);
+  const [hasSaved, setHasSaved] = useState(false);
 
   useEffect(
     () => onSnapshot (
@@ -41,8 +43,25 @@ const Post = ({id, caption, username, userImg, img,  }) => {
             (likes.findIndex
               ( (like) => (like.id === session?.user?.uid)) !== -1 )  
       , [likes]);
+    
+      useEffect(
+        () => onSnapshot(
+                collection(db, 'posts', id, 'saved'),
+                  (snapshot) => {
+                    setSaves(snapshot.docs)
+                    
+                  }),     
+        [db, id]);
+      
 
-    console.log(hasLiked)
+      useEffect(
+        () => 
+          setHasSaved
+            (saves.findIndex
+              ( (save) => (save.id === session?.user?.uid)) !== -1 )  
+      , [saves]);
+
+    
 
 
   const likePost = async () =>{
@@ -60,16 +79,19 @@ const Post = ({id, caption, username, userImg, img,  }) => {
   }
 
   const savePost = async () =>{
-     await setDoc(doc(db, 'posts', id, 'saved', session?.user?.uid), {
-      savedBy: session.user.username,
-      postedBy: username,
-      caption:caption ,
-      profileImg: userImg,
-      image: img,
-      timestamp: serverTimestamp(),
-
-    })
-  }
+    if(hasSaved){
+      
+      await deleteDoc(doc(db, 'posts', id, 'saved', session.user.uid));
+    } else{
+        await setDoc(doc(db, 'posts', id, 'saved', session?.user?.uid), {
+          savedBy: session.user.username,
+          postedBy: username,
+          caption:caption ,
+          profileImg: userImg,
+          image: img,
+          timestamp: serverTimestamp(),})
+      }
+    }
 
   const sendComment = async (e) => {
     e.preventDefault();
@@ -89,14 +111,14 @@ const Post = ({id, caption, username, userImg, img,  }) => {
   return (
     <div className='my-4 bg-white border max-w-lg border-gray-200 shadow-sm rounded-lg'>
       {/* Header*/}
-      <div className="flex items-center p-1 border-b border-gray-200">
+      <div className="flex items-center p-2 py-3 border-b border-gray-200">
         <img 
           src={userImg} 
           alt="user-image"
-          className='w-10 h-10 mr-3 object-contain rounded-full  border border-gray-200'
+          className='w-8 h-8 mr-3 object-contain rounded-full  border border-gray-200'
         />
         <p className='flex-1 text-sm font-medium'>{username}</p>
-        <HiOutlineDotsHorizontal className='h-5 mr-2 text-lg'/>
+        <HiOutlineDotsHorizontal className='h-5 mr-2 text-xl'/>
       </div>
       {/* Image */}
       <img 
@@ -113,17 +135,24 @@ const Post = ({id, caption, username, userImg, img,  }) => {
           <FaRegComment className='btn w-6 h-6'/>
           <IoPaperPlaneOutline className='btn w-6 h-6 '/>
         </div>
-        
-        <div>
+        {hasSaved ?
+          (<div>
+          <BsBookmarkFill onClick={savePost} className='btn w-5 h-5 hover:text-black'/>
+          </div>) : 
+          (<div>
           <BsBookmark onClick={savePost} className='btn w-5 h-5'/>
-        </div>
+         </div>)}
+        
         
       </div>
       )}
       
       
       {/* Likes counter */}
-      <p className='p-2 text-xs ml-2 font-semibold'>{likes.length}{" "}{likes.length > 1 ? 'likes': 'like'}</p>
+      {likes.length > 0 && (
+        <p className='p-2 text-xs ml-2 font-semibold'>{likes.length}{" "}{likes.length > 1 ? 'likes': 'like'}</p>
+      )}
+      
       {/* Caption */}
       <p className='p-2 ml-2 text-xs'>
         <span className='font-bold text-gray-600'>{username} </span>

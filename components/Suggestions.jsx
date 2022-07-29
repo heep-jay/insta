@@ -31,9 +31,9 @@ const Suggestions = () => {
                         <img 
                             src={user.avatar} 
                             alt="" 
-                            className='story w-7 h-7 my-2 object-cover border-none mr-3'
+                            className='story w-7 h-7 my-2 object-cover border-none mr-3 cursor-pointer'
                         />
-                        <div className='text-xs w-full flex-1'>
+                        <div className='text-xs w-full flex-1 cursor-pointer'>
                             <p className='font-semibold truncate'>{user.username.substring(0,10)}</p>
                             <p className='text-gray-400 text-[10px] '>Followed by stephen.nso + 1 more</p>
                         </div>
