@@ -124,7 +124,7 @@ const Post = ({id, caption, username, userImg, img,  }) => {
       <img 
         src={img} 
         alt="post-photo"
-        className='w-full object-contain'
+        className='w-full bg-black object-contain max-h-[600px]'
       />
       {/* Buttons */}
       {session && (
