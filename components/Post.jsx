@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { FaRegComment } from 'react-icons/fa';
+import { IoPaperPlaneOutline } from "react-icons/io5";
 import {  HeartIcon, EmojiHappyIcon, PaperAirplaneIcon } from '@heroicons/react/outline';
+import {  HeartIcon as  HeartIconFilled } from '@heroicons/react/solid';
 import { BsBookmark } from 'react-icons/bs';
 import { useSession } from 'next-auth/react';
-import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, orderBy, query, serverTimestamp, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
+import Moment from 'react-moment'
 
 const Post = ({id, caption, username, userImg, img,  }) => {
   const [showmore, setShowmore] = useState(false);
   const {data: session} = useSession();
   const [comment, setComment] = useState('');
   const [comments, setComments] = useState([]);
+  const [likes, setLikes] = useState([]);
+  const [hasLiked, setHasLiked] = useState(false)
 
   useEffect(
     () => onSnapshot (
@@ -20,7 +25,51 @@ const Post = ({id, caption, username, userImg, img,  }) => {
                 setComments(snapshot.docs)
                 
               }),     
-    [db]);
+    [db, id]);
+  useEffect(
+      () => onSnapshot(
+              collection(db, 'posts', id, 'likes'),
+                (snapshot) => {
+                  setLikes(snapshot.docs)
+                  
+                }),     
+      [db, id]);
+
+  useEffect(
+        () => 
+          setHasLiked
+            (likes.findIndex
+              ( (like) => (like.id === session?.user?.uid)) !== -1 )  
+      , [likes]);
+
+    console.log(hasLiked)
+
+
+  const likePost = async () =>{
+
+    if(hasLiked){
+      await deleteDoc(doc(db, 'posts', id, 'likes', session.user.uid));
+
+    } else{
+      await setDoc(doc(db, 'posts', id, 'likes', session?.user?.uid), {
+        username: session.user.username
+      })
+    }
+   
+
+  }
+
+  const savePost = async () =>{
+     await setDoc(doc(db, 'posts', id, 'saved', session?.user?.uid), {
+      savedBy: session.user.username,
+      postedBy: username,
+      caption:caption ,
+      profileImg: userImg,
+      image: img,
+      timestamp: serverTimestamp(),
+
+    })
+  }
 
   const sendComment = async (e) => {
     e.preventDefault();
@@ -36,7 +85,7 @@ const Post = ({id, caption, username, userImg, img,  }) => {
     })
 
   }
-  console.log(comments)
+  
   return (
     <div className='my-4 bg-white border max-w-lg border-gray-200 shadow-sm rounded-lg'>
       {/* Header*/}
@@ -59,13 +108,14 @@ const Post = ({id, caption, username, userImg, img,  }) => {
       {session && (
         <div className='bg-white flex items-center border-t p-2'>
         <div className='flex space-x-4 items-center flex-1'>
-          <HeartIcon className='btn'/>
+          {hasLiked ? (<HeartIconFilled onClick={likePost} className='btn hover:text-red-600 text-red-600'/>) : (<HeartIcon onClick={likePost} className='btn'/>)}
+          
           <FaRegComment className='btn w-6 h-6'/>
-          <PaperAirplaneIcon className='btn rotate-45 '/>
+          <IoPaperPlaneOutline className='btn w-6 h-6 '/>
         </div>
         
         <div>
-          <BsBookmark className='btn w-6 h-6'/>
+          <BsBookmark onClick={savePost} className='btn w-5 h-5'/>
         </div>
         
       </div>
@@ -73,9 +123,9 @@ const Post = ({id, caption, username, userImg, img,  }) => {
       
       
       {/* Likes counter */}
-      <p className='p-2 text-xs font-semibold'>570 likes</p>
+      <p className='p-2 text-xs ml-2 font-semibold'>{likes.length}{" "}{likes.length > 1 ? 'likes': 'like'}</p>
       {/* Caption */}
-      <p className='p-2 text-xs'>
+      <p className='p-2 ml-2 text-xs'>
         <span className='font-bold text-gray-600'>{username} </span>
         {showmore ? caption : `${caption?.substring(0, 35)}... `}{' '}
         <button
@@ -89,15 +139,16 @@ const Post = ({id, caption, username, userImg, img,  }) => {
       {comments.length > 0 && (
       <>
       
-        <h1 className='text-xs ml-2 font-medium text-gray-400'>View all {comments.length} {" "} comments</h1>
+        <h1 className='text-xs ml-2 p-2 font-medium text-gray-400'>View all {comments.length} {" "} comments</h1>
         <div className="p-2 h-12 overflow-y-scroll scrollbar-thumb-black scrollbar-thin">
           {comments.map((comment)=> (
-            <div key={comment?.id} className='flex items-center space-x-2 mb-3'>
+            <div key={comment?.id} className='flex items-center space-x-2  ml-2 mb-3'>
                 {/* <img 
                   src={comment?.data()?.userImg}
                   className='h-7 rounded-full'
                 /> */}
                 <p className='text-xs flex-1'>{" "}<span className='font-bold text-gray-600'>{comment.data().username} </span>{comment.data().comment}</p>
+                <Moment className='text-xs text-gray-500' fromNow>{comment.data().timestamp.toDate()}</Moment>
             </div>
           ))}
         </div>
