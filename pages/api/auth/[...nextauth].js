@@ -13,7 +13,7 @@ export default NextAuth({
     pages: {
         signIn: '/auth/signin',
     },
-    secret: process.env.NEXTAUTH_SECRET,
+    secret: process.env.SECRET,
     callbacks: {
         async session({ session, token, user}){
             session.user.username = session.user.name.split(' ').join('').toLocaleLowerCase();
