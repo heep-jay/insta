@@ -10,7 +10,7 @@ const Feed = () => {
   return (
     <main className={`grid max-w-lg h-screen mx-auto grid-cols-1 laptop:grid-cols-3 md:max-w-3xl lg:grid-cols-3 lg:max-w-4xl xl:max-w-4xl ${!session && '!grid-cols-1 !max-w-lg'}`}>
       {/* Section */}
-      <section className='col-span-1 md:col-span-2 xl:col-span-2 max-w-[470px] mx-auto'>   
+      <section className='col-span-1 md:col-span-2 xl:col-span-2 mini:max-w-full max-w-[465px] mx-auto'>   
         {/* stories */}
         <Stories/>
 

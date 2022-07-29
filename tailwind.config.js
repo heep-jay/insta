@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       screens: {
         'tablet': '800px',
+        'mini': '350px',
         'laptop': '1003px',
         'miniTv': '1024px'
       },
