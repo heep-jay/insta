@@ -40,7 +40,7 @@ const Post = ({id, caption, username, userImg, img,  }) => {
   useEffect(
         () => 
           setHasLiked
-            (likes.findIndex
+            (likes?.findIndex
               ( (like) => (like.id === session?.user?.uid)) !== -1 )  
       , [likes]);
     
@@ -101,8 +101,8 @@ const Post = ({id, caption, username, userImg, img,  }) => {
 
     await addDoc(collection(db, 'posts', id , 'comments'), {
       comment: commentTosend,
-      username: session.user.username,
-      userImg: session.user.image,
+      username: session?.user?.username,
+      userImg: session?.user?.image,
       timestamp: serverTimestamp(),
     })
 
@@ -149,8 +149,8 @@ const Post = ({id, caption, username, userImg, img,  }) => {
       
       
       {/* Likes counter */}
-      {likes.length > 0 && (
-        <p className='p-2 text-xs ml-2 font-semibold'>{likes.length}{" "}{likes.length > 1 ? 'likes': 'like'}</p>
+      {likes?.length > 0 && (
+        <p className='p-2 text-xs ml-2 font-semibold'>{likes?.length}{" "}{likes?.length > 1 ? 'likes': 'like'}</p>
       )}
       
       {/* Caption */}
@@ -165,19 +165,19 @@ const Post = ({id, caption, username, userImg, img,  }) => {
           >{showmore ? "less" : "more"}</button>
       </p>
       {/* Comments */}
-      {comments.length > 0 && (
+      {comments?.length > 0 && (
       <>
       
-        <h1 className='text-xs ml-2 p-2 font-medium text-gray-400'>View all {comments.length} {" "} comments</h1>
+        <h1 className='text-xs ml-2 p-2 font-medium text-gray-400'>View all {comments?.length} {" "} comments</h1>
         <div className="p-2 h-12 overflow-y-scroll scrollbar-thumb-black scrollbar-thin">
-          {comments.map((comment)=> (
+          {comments?.map((comment)=> (
             <div key={comment?.id} className='flex items-center space-x-2  ml-2 mb-3'>
                 {/* <img 
                   src={comment?.data()?.userImg}
                   className='h-7 rounded-full'
                 /> */}
-                <p className='text-xs flex-1'>{" "}<span className='font-bold text-gray-600'>{comment.data().username} </span>{comment.data().comment}</p>
-                <Moment className='text-xs text-gray-500' fromNow>{comment.data().timestamp.toDate()}</Moment>
+                <p className='text-xs flex-1'>{" "}<span className='font-bold text-gray-600'>{comment?.data().username} </span>{comment?.data().comment}</p>
+                <Moment className='text-xs text-gray-500' fromNow>{comment?.data()?.timestamp?.toDate()}</Moment>
             </div>
           ))}
         </div>
