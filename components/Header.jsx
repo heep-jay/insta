@@ -13,6 +13,7 @@ import { modalState } from '../atoms/modalAtom';
 import { themeState } from '../atoms/themeAtom';
 import { useRecoilState } from 'recoil';
 import logo from '../public/white.png'
+import smallLogo from '../public/small.png'
 
 
 
@@ -49,39 +50,26 @@ const Header = ({darkMode, setDarkMode}) => {
         <div className="flex justify-between  dark:bg-black lg:mt-0 bg-white max-w-4xl items-center mx-5 lg:mx-auto lg:min-w-[950px] ">
              {/* Left */}
              
-            <div className='relative hidden lg:inline-grid h-16 w-24 cursor-pointer mr-40 '>
-                {/* {darkMode ? (
-                <Image
-                    onClick={()=> router.push('/')}
-                    src={logo}
-                    layout='fill'
-                    objectFit='contain'
-                />) :(
-                <Image
-                    onClick={()=> router.push('/')}
-                    src="https://blackhillsballoons.com/wp-content/uploads/2021/01/Instagram-Logo.png"
-                    layout='fill'
-                    objectFit='contain'
-                />)}
-                */}
+            <div className='relative hidden lg:inline-grid h-16 w-24 dark:w-28 cursor-pointer mr-40 '>
+              
                 {theme ? (
                 <Image
                     onClick={()=> router.push('/')}
-                    src={logo}
+                    src="https://blackhillsballoons.com/wp-content/uploads/2021/01/Instagram-Logo.png"
                     layout='fill'
                     objectFit='contain'
                 />) :(
                 <Image
                     priority
                     onClick={()=> router.push('/')}
-                    src="https://blackhillsballoons.com/wp-content/uploads/2021/01/Instagram-Logo.png"
+                    src={logo}
                     layout='fill'
                     objectFit='contain'
                 />)}
                
 
             </div>
-            <div className='relative lg:hidden inline-grid h-10 w-10 flex-shrink-0 cursor-pointer mr-4 md:mr-40'>
+            {theme ? ( <div className='relative lg:hidden inline-grid h-10 w-10 flex-shrink-0 cursor-pointer mr-4 md:mr-40'>
                 <Image
                     onClick={()=> router.push('/')}
                     src="https://links.papareact.com/jjm"
@@ -89,7 +77,18 @@ const Header = ({darkMode, setDarkMode}) => {
                     objectFit='contain'
                 />
 
-            </div>
+            </div>) : (
+                 <div className='relative lg:hidden inline-grid h-10 w-10 flex-shrink-0 cursor-pointer mr-4 md:mr-40'>
+                 <Image
+                     onClick={()=> router.push('/')}
+                     src={smallLogo}
+                     layout='fill'
+                     objectFit='contain'
+                 />
+ 
+             </div>
+            )}
+           
 
             {/* Middle */}
             {session ? ( 
@@ -116,11 +115,8 @@ const Header = ({darkMode, setDarkMode}) => {
                     <div className='text-xs bg-red-500 text-white absolute w-5 h-5 text-center -top-1 -right-2 rounded-full animate-pulse'>3</div>
                 </div>
                 <CgAddR onClick={()=> setOpen(true)} className='navBtn'/>
-                {/* {darkMode ? (<MdLightMode onClick={()=> setDarkMode(!darkMode)} className='navBtn'/>): (
-                            <MdDarkMode onClick={()=> setDarkMode(!darkMode)} className='navBtn'/>
-                        ) } */}
-                         {darkMode ? (<MdLightMode onClick={getTheme} className='navBtn'/>): (
-                            <MdDarkMode onClick={getTheme} className='navBtn'/>
+                         {theme ? (<MdDarkMode onClick={getTheme} className='navBtn'/>): (
+                            <MdLightMode onClick={getTheme} className='navBtn'/>
                         ) }
                 
                 <HeartIcon className='navBtn'/>

@@ -12,20 +12,13 @@ const Home = () => {
   const [mode, setMode] = useState('dark');
   const [theme, setTheme] = useRecoilState(themeState)
 
-  // if (typeof window !== "undefined") {
-  //   if(theme){
-  //     window.localStorage.setItem('mode', 'dark')
-  //   }else {
-  //     window.localStorage.setItem('mode', 'light')
-  //   }
-   
-  // }
+
     useEffect(() => {
       if (typeof window !== "undefined") {
 
-          // setTheme(false)
+         
           setMode(window.localStorage.getItem('mode'))
-          console.log({mode})
+          // console.log({mode})
         
        
       }
