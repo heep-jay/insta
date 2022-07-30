@@ -158,12 +158,15 @@ const Post = ({id, caption, username, userImg, img,  }) => {
       <p className='p-2 ml-2 text-xs'>
         <span className='font-bold text-gray-600'>{username} </span>
         {showmore ? caption : `${caption?.substring(0, 35)}... `}{' '}
+        {caption.length > 34 &&
         <button
-          className='text-gray-400' 
-          type='button'
-          onClick={()=> setShowmore(!showmore)}
-          
-          >{showmore ? "less" : "more"}</button>
+        className='text-gray-400' 
+        type='button'
+        onClick={()=> setShowmore(!showmore)}
+        
+        >{showmore ? "less" : "more"}</button>
+        }
+        
       </p>
       {/* Comments */}
       {comments?.length > 0 && (
