@@ -10,7 +10,7 @@ import { addDoc, collection, deleteDoc, doc, getDoc, onSnapshot, orderBy, query,
 import { db } from '../firebase';
 import Moment from 'react-moment'
 
-const Post = ({id, caption, username, userImg, img,  }) => {
+const Post = ({id, caption, username, userImg, img, timestamp }) => {
   const [showmore, setShowmore] = useState(false);
   const {data: session} = useSession();
   const [comment, setComment] = useState('');
@@ -109,15 +109,15 @@ const Post = ({id, caption, username, userImg, img,  }) => {
   }
   
   return (
-    <div className='my-4 bg-white border border-gray-200 shadow-sm rounded-lg max-w-[482px]'>
+    <div className='my-4 dark:bg-black dark:border-slate-900 bg-white border border-gray-200 shadow-sm dark:shadow-none rounded-lg max-w-[482px]'>
       {/* Header*/}
-      <div className="flex items-center p-2 py-3 border-b border-gray-200">
+      <div className="flex items-center p-2 py-3 border-b border-gray-200 dark:border-slate-900">
         <img 
           src={userImg} 
           alt="user-image"
-          className='w-8 h-8 mr-3 object-contain rounded-full  border border-gray-200'
+          className='w-8 h-8 mr-3 object-contain rounded-full  border border-gray-200 dark:border-slate-900'
         />
-        <p className='flex-1 text-sm font-medium'>{username}</p>
+        <p className='flex-1 text-sm font-medium dark:text-white'>{username}</p>
         <HiOutlineDotsHorizontal className='h-5 mr-2 text-xl'/>
       </div>
       {/* Image */}
@@ -129,8 +129,8 @@ const Post = ({id, caption, username, userImg, img,  }) => {
       />
       {/* Buttons */}
       {session && (
-        <div className='bg-white flex items-center border-t p-2'>
-        <div className='flex space-x-4 items-center flex-1'>
+        <div className='bg-white dark:bg-black dark:border-slate-900 flex items-center border-t p-2'>
+        <div className='flex space-x-4 items-center flex-1 dark:text-white'>
           {hasLiked ? (<HeartIconFilled onClick={likePost} className='btn hover:text-red-600 text-red-600'/>) : (<HeartIcon onClick={likePost} className='btn'/>)}
           
           <FaRegComment className='btn w-6 h-6'/>
@@ -138,10 +138,10 @@ const Post = ({id, caption, username, userImg, img,  }) => {
         </div>
         {hasSaved ?
           (<div>
-          <BsBookmarkFill onClick={savePost} className='btn w-5 h-5 hover:text-black'/>
+          <BsBookmarkFill onClick={savePost} className='btn w-5 h-5 hover:text-black dark:text-white'/>
           </div>) : 
           (<div>
-          <BsBookmark onClick={savePost} className='btn w-5 h-5'/>
+          <BsBookmark onClick={savePost} className='btn w-5 h-5 dark:text-white'/>
          </div>)}
         
         
@@ -151,12 +151,12 @@ const Post = ({id, caption, username, userImg, img,  }) => {
       
       {/* Likes counter */}
       {likes?.length > 0 && (
-        <p className='p-2 text-xs ml-2 font-semibold'>{likes?.length}{" "}{likes?.length > 1 ? 'likes': 'like'}</p>
+        <p className='p-2 text-xs ml-2 font-semibold dark:text-white'>{likes?.length}{" "}{likes?.length > 1 ? 'likes': 'like'}</p>
       )}
       
       {/* Caption */}
-      <p className='p-2 ml-2 text-xs'>
-        <span className='font-bold text-gray-600'>{username} </span>
+      <p className='p-2 ml-2 text-xs dark:text-white font-light '>
+        <span className='font-bold text-gray-600 dark:text-gray-100 mr-1'>{username} </span>
         {showmore ? caption : `${caption?.substring(0, 35)}... `}{' '}
         {caption.length > 34 &&
         <button
@@ -168,19 +168,21 @@ const Post = ({id, caption, username, userImg, img,  }) => {
         }
         
       </p>
+      {/* timestap */}
+        <Moment fromNow className='dark:text-gray-400 p-4 text-[10px] uppercase'>{timestamp}</Moment>
       {/* Comments */}
       {comments?.length > 0 && (
       <>
       
-        <h1 className='text-xs ml-2 p-2 font-medium text-gray-400'>View all {comments?.length} {" "} comments</h1>
-        <div className="p-2 h-12 overflow-y-scroll scrollbar-thumb-black scrollbar-thin">
+        <h1 className='text-xs ml-2 p-2  font-medium text-gray-400'>View all {comments?.length} {" "} comments</h1>
+        <div className="p-2 h-16 overflow-y-scroll scrollbar-thumb-black dark:scrollbar-thumb-white scrollbar-thin">
           {comments?.map((comment)=> (
             <div key={comment?.id} className='flex items-center space-x-2  ml-2 mb-3'>
                 {/* <img 
                   src={comment?.data()?.userImg}
                   className='h-7 rounded-full'
                 /> */}
-                <p className='text-xs flex-1'>{" "}<span className='font-bold text-gray-600'>{comment?.data().username} </span>{comment?.data().comment}</p>
+                <p className='text-xs flex-1 dark:text-white dark:font-light'>{" "}<span className='font-bold text-gray-600 dark:text-gray-100 mr-1'>{comment?.data().username} </span>{comment?.data().comment}</p>
                 <Moment className='text-xs text-gray-500' fromNow>{comment?.data()?.timestamp?.toDate()}</Moment>
             </div>
           ))}
@@ -190,16 +192,16 @@ const Post = ({id, caption, username, userImg, img,  }) => {
       {/* InputBox */}
       {session && (
         <form 
-          className='flex items-center p-3 text-xs border-t'
+          className='flex items-center p-3 text-xs border-t dark:border-slate-900 dark:bg-black'
           
         >
-        <EmojiHappyIcon className='btn mr-3'/>
+        <EmojiHappyIcon className='btn mr-3 dark:text-white'/>
         <input 
           	type="text"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder='Add a Comment'
-            className='border-none outline-none flex-1'
+            className='border-none outline-none dark:bg-black p-2 rounded-lg dark:text-white mr-2 flex-1'
           />
         <button onClick={sendComment} type='sumbmit' disabled={!comment.trim()} className='text-blue-300 font-semibold'>Post</button>
       </form>

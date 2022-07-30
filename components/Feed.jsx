@@ -9,9 +9,9 @@ import Footer from './Footer'
 const Feed = () => {
   const {data : session } = useSession();
   return (
-    <main className={`grid max-w-lg h-screen mx-auto grid-cols-1 laptop:grid-cols-3 md:max-w-3xl lg:grid-cols-3 lg:max-w-4xl xl:max-w-4xl ${!session && '!grid-cols-1 !max-w-lg'}`}>
+    <main className={`grid dark:bg-black max-w-lg h-screen mx-auto grid-cols-1 laptop:grid-cols-3 md:max-w-3xl lg:grid-cols-3 lg:max-w-4xl xl:max-w-4xl ${!session && '!grid-cols-1 !max-w-lg'}`}>
       {/* Section */}
-      <section className='col-span-1 mx-auto md:col-span-2 xl:col-span-2 laptop:-ml-[2.5rem] miniTv:ml-0 mini:max-w-full'>   
+      <section className='col-span-1 mx-auto md:col-span-2 xl:col-span-2 laptop:-ml-[2.5rem] miniTv:ml-0 mini:max-w-full dark:bg-black'>   
         {/* stories */}
         <Stories/>
 

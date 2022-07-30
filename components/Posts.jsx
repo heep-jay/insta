@@ -15,11 +15,11 @@ const Posts = () => {
                   
                 }),     
       [db]);
-      console.log(posts)
+      
   return (
     <div className=''>
         {posts.map((post)=> (
-            <Post key={post.id} id={post.id} username={post.data().username} userImg={post.data().profileImg} caption={post.data().caption} img={post.data().image} />
+            <Post key={post.id} id={post.id} username={post.data().username} userImg={post.data().profileImg} caption={post.data().caption} img={post.data().image} timestamp={post.data().timestamp.toDate()} />
         ))}
 
     </div>

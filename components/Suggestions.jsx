@@ -34,7 +34,7 @@ const Suggestions = () => {
                             className='story w-8 h-8 my-2 object-cover border-none mr-3 cursor-pointer'
                         />
                         <div className='text-sm w-full flex-1 cursor-pointer'>
-                            <p className='font-semibold truncate'>{user.username.substring(0,10)}</p>
+                            <p className='font-semibold truncate dark:text-white'>{user.username.substring(0,10)}</p>
                             <p className='text-gray-500 text-[12px] '>Followed by stephen.nso + 1 more</p>
                         </div>
                         <button className='text-blue-400 text-[12px] ml-12 font-medium '>Follow</button>
