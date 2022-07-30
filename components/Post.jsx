@@ -121,7 +121,8 @@ const Post = ({id, caption, username, userImg, img,  }) => {
         <HiOutlineDotsHorizontal className='h-5 mr-2 text-xl'/>
       </div>
       {/* Image */}
-      <img 
+      <img
+        onDoubleClick={likePost}
         src={img} 
         alt="post-photo"
         className='w-full bg-black object-contain max-h-[560px]'
