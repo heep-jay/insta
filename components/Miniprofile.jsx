@@ -5,7 +5,7 @@ const Miniprofile = () => {
   const {data: session } = useSession();
   return (
     <div className='flex justify-start items-center '>
-        <img 
+        <img referrerPolicy="no-referrer"
             src={session?.user?.image} 
             alt="" 
             className='story object-contain border-gray-400 mr-3'

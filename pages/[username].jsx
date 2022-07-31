@@ -6,11 +6,11 @@ import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { themeState } from '../atoms/themeAtom';
 import Head from 'next/head';
+import { getPosts, getUsername } from '../helpers';
+import { get } from 'http';
 
-
-
-const UserDetails = ({username}) => {
-    console.log(username)
+const UserDetails = ({userposts, userProfile}) => {
+    console.log(userposts, userProfile)
     const [darkMode, setDarkMode] = useState(false);
     const [mode, setMode] = useState('dark');
     const [theme, setTheme] = useRecoilState(themeState)
@@ -41,7 +41,7 @@ const UserDetails = ({username}) => {
       <Modal/>
       {/* Header */}
       <Header/>
-     <ProfileFeed user={username}/>
+     <ProfileFeed user={userposts}/>
       
     </div>
     </div>
@@ -55,24 +55,28 @@ const UserDetails = ({username}) => {
 export default UserDetails;
 
 export async function getStaticProps({ params }) {
-    let snapshots =[];
-    const postsRef = collection(db, "posts");
-    const q = query(postsRef, where("username", "==", params?.username));
-    await getDocs(q).then((snap) => {
-        snapshots =  snap.docs
-        snapshots.map((snapshot) => ( snapshot.data()
-
-        
-      ))
-     snapshots = JSON.parse(JSON.stringify(snapshots))
-    }
+    // let snapshots =[];
+    // let snapshots2 =[];
+    // const postsRef = collection(db, "posts");
+    // const q = query(postsRef, where("username", "==", params?.username));
+    // await getDocs(q).then((snap) => {
+    //     snapshots =  snap.docs
+    //     snapshots.map((snapshot) => ( snapshot.data()  
+    //   ))
+    //  snapshots = JSON.parse(JSON.stringify(snapshots))
+    // }
       
-    )
+    // )
+      const posts =    await getPosts(params?.username)
+
+      const username =  await getUsername(params?.username)
+   
      
  
     return {
       props: {
-        username: snapshots,
+        userposts: posts,
+        userProfile: username,
       }
     };
   }
@@ -80,8 +84,8 @@ export async function getStaticProps({ params }) {
   export async function getStaticPaths() {
     let snapshots = [];
     let username = ''
-    const postsRef = collection(db, "posts");
-    const q = query(postsRef,  orderBy('timestamp', 'desc'));
+    const postsRef = collection(db, "profiles");
+    const q = query(postsRef);
       await getDocs(q).then((snap)=> {
          snapshots = snap.docs;
          console.log(snapshots)

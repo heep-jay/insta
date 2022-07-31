@@ -4,6 +4,7 @@ const Story = ({img, username, }) => {
   return (
     <div className='dark:bg-black'>
         <img 
+            referrerPolicy="no-referrer"
             src={img} 
             alt="user-avatar" 
             className='story'

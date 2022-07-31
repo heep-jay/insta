@@ -1,12 +1,18 @@
 import React from 'react';
 import Image from 'next/image'
-import { getProviders, signIn } from "next-auth/react"
+import { getProviders, signIn, useSession } from "next-auth/react"
 import mypic from '../../public/auth.png'
+import { db } from '../../firebase';
+import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+
 
 const signin = ({providers}) => {
+    const {data: session} = useSession();
+    
 
-    const signInWith = (provider) =>{
+    const signInWith = async (provider) =>{
         signIn(provider.id, {callbackUrl : '/'})
+          
     }
   return (
     <>

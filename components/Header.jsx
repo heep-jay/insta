@@ -121,6 +121,7 @@ const Header = ({darkMode, setDarkMode}) => {
                 
                 <HeartIcon className='navBtn'/>
                 <img 
+                    referrerPolicy="no-referrer"
                     onClick={signOut}
                     src={session?.user?.image}
                     alt="profile-photo" 

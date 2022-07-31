@@ -19,6 +19,7 @@ export default NextAuth({
             session.user.username = session.user.name.split(' ').join('').toLocaleLowerCase();
 
             session.user.uid = token.sub
+            session.user.bio = "Add a bio "
 
             return session;
         }
