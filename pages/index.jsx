@@ -36,7 +36,7 @@ const Home = () => {
       </Head>
       <Modal/>
       {/* Header */}
-      <Header darkMode={darkMode} setDarkMode={setDarkMode}/>
+      <Header/>
       {/* Feed */}
       <Feed/>
       {/* Modal */}

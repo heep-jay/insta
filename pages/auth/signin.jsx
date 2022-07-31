@@ -4,6 +4,10 @@ import { getProviders, signIn } from "next-auth/react"
 import mypic from '../../public/auth.png'
 
 const signin = ({providers}) => {
+
+    const signInWith = (provider) =>{
+        signIn(provider.id, {callbackUrl : '/'})
+    }
   return (
     <>
     <div className='grid grid-cols-1 lg:grid-cols-2 max-w-lg lg:max-w-3xl mx-auto'>
@@ -41,7 +45,7 @@ const signin = ({providers}) => {
                 <div key={provider.name}>
                     <button 
                         className='text-sm font-semibold text-white bg-blue-500 py-2 px-2 rounded-md'
-                        onClick={() => signIn(provider.id, {callbackUrl : '/'})}>
+                        onClick={signInWith(provider)}>
                     Continue with {provider.name}
                     </button>
                     

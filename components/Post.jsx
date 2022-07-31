@@ -109,7 +109,7 @@ const Post = ({id, caption, username, userImg, img, timestamp }) => {
   }
   
   return (
-    <div className='my-4 dark:bg-black dark:border-slate-900 bg-white border border-gray-200 shadow-sm dark:shadow-none rounded-lg max-w-[482px]'>
+    <div className='my-4 dark:bg-black dark:border-slate-900 bg-white border border-gray-200 shadow-sm dark:shadow-none rounded-xl max-w-[482px]'>
       {/* Header*/}
       <div className="flex items-center p-2 py-3 border-b border-gray-200 dark:border-slate-900">
         <img 

@@ -5,6 +5,7 @@ import Stories from './Stories';
 import Suggestions from './Suggestions';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Footer from './Footer'
+import Test from './Test';
 
 const Feed = () => {
   const {data : session } = useSession();
@@ -29,7 +30,7 @@ const Feed = () => {
               <Suggestions/>
               
               <Footer/>
-              
+              {/* <Test/> */}
               </>
             )}
          
