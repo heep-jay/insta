@@ -32,7 +32,7 @@ const Header = ({darkMode, setDarkMode}) => {
 
             if (!theme){
                 window.localStorage.setItem('mode', 'light')
-                // console.log({mode})
+            
             } else {
                 window.localStorage.setItem('mode', 'dark')
             }

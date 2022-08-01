@@ -7,23 +7,23 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 
 
-const Bio = ({user}) => {
+const Bio = ({profile}) => {
     const [userName, setUserName] = useState('')
     const [image, setImage] = useState('');
     const {data: session} = useSession();
 
-    useEffect(() => {
-        user.map((user)=> {
-            setUserName(user?._document?.data?.value?.mapValue?.fields?.username?.stringValue)
-            setImage(user?._document?.data?.value?.mapValue?.fields?.profileImg?.stringValue)
+    // useEffect(() => {
+    //     user.map((user)=> {
+    //         setUserName(user?._document?.data?.value?.mapValue?.fields?.username?.stringValue)
+    //         setImage(user?._document?.data?.value?.mapValue?.fields?.profileImg?.stringValue)
             
-        }
+    //     }
             
             
-           )
-    }, [user])
+    //        )
+    // }, [user])
     
-   
+
 
   return (
     <div className='w-full'>
@@ -32,14 +32,14 @@ const Bio = ({user}) => {
             <div className='hidden md:grid md:grid-cols-4 p-3 '>
                 <div className='col-span-1 w-full'>
                     <img 
-                        src={image} 
+                        src={profile.image} 
                         alt="profile-photo"
                         className='h-36 w-36 rounded-full'
                     />
                 </div>
                     <div className='col-span-3 w-full ml-10 space-y-7'>
                         <div className='flex space-x-5 items-center'>
-                            <h1 className='text-2xl font-thin'>{userName}</h1>
+                            <h1 className='text-2xl font-thin'>{profile.username}</h1>
                             <button className='text-sm font-semibold border border-gray-400 py-1 px-3 rounded-sm'>Edit Profile</button>
                             <FiSettings className='navBtn'/>
                         </div>
@@ -84,7 +84,7 @@ const Bio = ({user}) => {
         <div className='flex w-full mt-1 mb-2 p-3 items-center'>
         <div className=''>
             <img 
-                src={session?.user?.image} 
+                src={profile?.image} 
                 alt="profile-photo"
                 className='h-[75px] w-[75px] rounded-full'
              />
@@ -93,7 +93,7 @@ const Bio = ({user}) => {
         <div className='ml-5'>
             <div className='flex flex-col justify-start'>
                 <div className='flex items-center'>
-                <h1 className='text-2xl font-thin mr-4 p-2'>{session?.user?.username}</h1>
+                <h1 className='text-2xl font-thin mr-4 p-2'>{profile?.username}</h1>
                 <FiSettings className='navBtn'/>
                 </div>
             </div> 

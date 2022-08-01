@@ -4,15 +4,20 @@ import { db } from '../firebase'
 
 
 export const getUsername = async (params) => {
-    let snapshots = [] ;
+    let data = {}
     const userRef = collection(db, "profiles");
     const q2 = query(userRef, where("username", "==", params));
      const querysnapshot = await getDocs(q2)
      querysnapshot.docs.map(
         (snapshot) => {
-            snapshot.data().username
-            data = snapshot.data().username
-        }      
+             data = {
+                username:snapshot.data().username,
+                bio: snapshot.data().bio,
+                image: snapshot.data().profileImg,
+                id: snapshot.data().id,
+               
+            }
+        }    
         
     )
     return data;

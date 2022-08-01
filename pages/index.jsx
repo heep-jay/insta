@@ -22,15 +22,18 @@ const Home = () => {
 
     if(session){
       const q = query(collection(db,'profiles'), where ("username",  "==", `${session?.user?.username}`));
-      // console.log(userProfile)
+      
       const querySnapshot = await getDocs(q);
+    
    
-      if(!querySnapshot){
+      if(querySnapshot.docs.length === 0 ){
         await addDoc(collection(db, 'profiles'), {
+          id: session?.user?.uid,
           username: session?.user?.username,
-          bio: session?.user?.bio
+          bio: session?.user?.bio,
+          profileImg: session?.user?.image,
         })
-        // console.log(userProfile)
+       
       }
     }
    
@@ -40,7 +43,7 @@ const Home = () => {
    useEffect( () => {
 
       profileQuery();
-      }, [])
+      }, [session])
 
 
 

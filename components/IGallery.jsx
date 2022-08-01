@@ -1,32 +1,31 @@
 import React from 'react'
-import { useState } from 'react';
-import { FaRegComment } from 'react-icons/fa';
-import {  HeartIcon as  HeartIconFilled } from '@heroicons/react/solid';
+import { useEffect, useState } from 'react';
+import { collection, onSnapshot, orderBy, query, where } from 'firebase/firestore';
+import { db } from '../firebase';
+import Image from './Image';
 
-const IGallery = ({user}) => {
- user.map((user)=> (
-  console.log(user._document.data.value.mapValue.fields.image)
- ))
+function IGallery({posts, profile}) {
+  const [gallery, setGallery] = useState([])
+
+
+  useEffect(
+  () => onSnapshot (
+          query(collection(db, 'posts'), where('username', "==", profile.username), orderBy("timestamp", "desc")),
+            (snapshot) => {
+              setGallery(snapshot.docs)
+              
+              
+            }),     
+  [db]);
+ 
 
   
   return (
     <div className='grid grid-cols-3 space-y-2 sm:space-x-2 space-x-1 items-center justify-center p-0'>
-      {user.map((u)=> (
-        <div
-          className='col-span-1 mx-auto my-auto relative '
-        >
-          <img src={u._document.data.value.mapValue.fields.image.stringValue} className=' h-[159px] w-[159px] object-cover sm:h-[221px] sm:w-[221px]  md:h-[291px] md:w-[291px] lg:h-[293px] lg:w-[293px]  '  alt='' />
-        {/* <div className=' hidden hover:block h-[159px] w-[159px] absolute text-black z-40 top-0 left-0 bg-black opacity-50  object-cover sm:h-[221px] sm:w-[221px]  md:h-[291px] md:w-[291px] lg:h-[293px] lg:w-[293px] '>
-           
-          </div>
-          <div className='z-50 flex absolute top-32 left-32'>
-            <HeartIconFilled  className='w-11 h-11 ' />
-            <FaRegComment className='w-11 h-11'/>
-          </div> */}
-          
+      {gallery.map((post)=> (
+        
+       <Image key={post.id} id={post.id} image={post.data().image} />
 
-
-        </div>
       ))}
       
       
