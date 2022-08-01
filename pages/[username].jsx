@@ -7,10 +7,12 @@ import { useRecoilState } from 'recoil';
 import { themeState } from '../atoms/themeAtom';
 import Head from 'next/head';
 import { getPosts, getUsername } from '../helpers';
+import { useSession } from 'next-auth/react';
+
 
 
 const UserDetails = ({userposts, userProfile}) => {
-    
+    const {data: session} = useSession()
     const [darkMode, setDarkMode] = useState(false);
     const [mode, setMode] = useState('dark');
     const [theme, setTheme] = useRecoilState(themeState)
@@ -31,20 +33,23 @@ const UserDetails = ({userposts, userProfile}) => {
 
     
   return (
-    <>
-    <div className={`${mode} w-full`}>
-    <div className=" bg-gray-50 dark:bg-black h-screen overflow-y-scroll scrollbar-hide">
-      <Head>
-        <title>Insta App</title>
-        <link rel="icon" href="https://img.icons8.com/color/48/000000/instagram-new--v1.png" />
-      </Head>
-      <Modal/>
-      {/* Header */}
-      <Header/>
-     <ProfileFeed posts={userposts} profile={userProfile}/>
-      
-    </div>
-    </div>
+    <> 
+    {session ? (
+       <div className={`${mode} w-full`}>
+       <div className=" bg-gray-50 dark:bg-black h-screen overflow-y-scroll scrollbar-hide">
+         <Head>
+           <title>`{`Insta App | Profile ${userProfile.username}`}</title>
+           <link rel="icon" href="https://img.icons8.com/color/48/000000/instagram-new--v1.png" />
+         </Head>
+         <Modal/>
+         {/* Header */}
+         
+        <ProfileFeed posts={userposts} profile={userProfile}/>
+         
+       </div>
+       </div>
+    ): (<Header/> )}
+   
     
     </>
         

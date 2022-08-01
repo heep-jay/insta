@@ -60,7 +60,7 @@ const Bio = ({profile}) => {
 
                             <BsGrid3X3 className='mr-1'/>
                             POSTS
-                            <div className='border border-black absolute top-0 w-16'></div>
+                            <div className='border border-black  dark:border-white absolute top-0 w-16'></div>
                         </div>
                         <div className='flex items-center mt-4 text-xs font-bold tracking-wider cursor-pointer'>
                             <BsBookmark className='mr-1'/>
