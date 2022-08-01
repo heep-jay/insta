@@ -182,7 +182,7 @@ const Post = ({id, caption, username, userImg, img, timestamp }) => {
                   src={comment?.data()?.userImg}
                   className='h-7 rounded-full'
                 /> */}
-                <p className='text-xs flex-1 dark:text-white dark:font-light'>{" "}<span className='font-bold text-gray-600 dark:text-gray-100 mr-1'>{comment?.data().username} </span>{comment?.data().comment}</p>
+                <p className='text-xs flex-1 dark:text-white dark:font-light'>{" "}<span className='font-bold text-gray-600 dark:text-gray-100 mr-1'>{comment?.data()?.username} </span>{comment?.data()?.comment}</p>
                 <Moment className='text-xs text-gray-500' fromNow>{comment?.data()?.timestamp?.toDate()}</Moment>
             </div>
           ))}
