@@ -43,6 +43,7 @@ const UserDetails = ({userposts, userProfile}) => {
          </Head>
          <Modal/>
          {/* Header */}
+         <Header/>
          
         <ProfileFeed posts={userposts} profile={userProfile}/>
          
